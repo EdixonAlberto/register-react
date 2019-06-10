@@ -1,0 +1,32 @@
+{
+    "users": [
+        {
+            "fullname": "José Ramirez",
+            "profession": "Desarrollador Web",
+            "age": 25,
+            "email": "josese25@gmail.com",
+            "country": "Venezuela"
+        },
+        {
+            "fullname": "Oscar Peraza",
+            "profession": "Diseñador",
+            "age": 28,
+            "email": "oscar2019@hotmail.com",
+            "country": "Colombia"
+        },
+        {
+            "fullname": "Romina Barrios ",
+            "profession": "Estudiante",
+            "age": 18,
+            "email": "rominita100@gmail.com",
+            "country": "Chile"
+        },
+        {
+            "fullname": "Ruben Linares",
+            "profession": "Marketing Digital",
+            "age": 32,
+            "email": "ruben_peru@outlook.com",
+            "country": "Peru"
+        }
+    ]
+}

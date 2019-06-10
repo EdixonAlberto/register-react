@@ -1,0 +1,45 @@
+{
+  "name": "crud-react",
+  "version": "1.0.0",
+  "private": true,
+  "author": {
+    "name": "Edixon Alberto",
+    "email": "edixonalbertto@gmail.com",
+    "url": "https://www.linkedin.com/in/edixonalberto"
+  },
+  "homepage": "https://edixonalberto.github.io/crud-react",
+  "license": "MIT",
+  "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/EdixonAlberto/crud-react.git"
+  },
+  "dependencies": {
+    "bootstrap": "^4.3.1",
+    "jquery": "^3.3.1",
+    "popper.js": "^1.14.7",
+    "react": "^16.8.2",
+    "react-dom": "^16.8.2",
+    "react-scripts": "2.1.5"
+  },
+  "devDependencies": {
+    "gh-pages": "^2.0.1",
+    "json-loader": "^0.5.7"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
