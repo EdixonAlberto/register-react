@@ -1,0 +1,39 @@
+{
+  "name": "register-react",
+  "version": "1.0.0",
+  "description": "APP WEB con React y API REST con Express para el registro y almacenamiento de usuarios",
+  "author": {
+    "name": "Edixon Alberto",
+    "email": "edixonalbertto@gmail.com"
+  },
+  "homepage": "https://register-react.herokuapp.com/",
+  "license": "MIT",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/EdixonAlberto/register-react.git"
+  },
+  "dependencies": {
+    "bootstrap": "^4.3.1",
+    "jquery": "^3.4.1",
+    "popper.js": "^1.15.0",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "react-scripts": "3.1.1"
+  },
+  "devDependencies": {},
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
