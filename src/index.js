@@ -4,6 +4,6 @@ import App from './App';
 
 // ASSETS
 import './assets/css/index.css';
-import 'bootstrap/dist/css/bootstrap.css';
+import './modules/bootstrap';
 
 ReactDOM.render(<App />, document.getElementById('root'));
