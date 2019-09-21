@@ -12,14 +12,15 @@ import UserForm from './components/UserForm';
 
 // ASSETS
 import './assets/css/app.css';
-// import users from './assets/users.json';
+import users from './assets/users.json';
 
 export default class App extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            users: []
+            dbUsers: users,
+            userList: users
         }
     }
 
@@ -27,16 +28,38 @@ export default class App extends Component {
         newUser.id = uuid();
 
         this.setState({
-            users: [...this.state.users, newUser]
+            dbUsers: [newUser, ...this.state.dbUsers],
+            userList: [newUser, ...this.state.dbUsers]
         });
     }
 
-    update = id => {
-        console.log(id, 'Editado');
-    }
+    update = id => { }
 
     delete = id => {
-        console.log(id, 'Eliminado');
+        const newUsers = this.state.dbUsers.filter(users => users.id !== id);
+
+        this.setState({
+            dbUsers: newUsers,
+            userList: newUsers
+        });
+    }
+
+    search = name => {
+        if(name === 'reset') this.setState({
+            userList: this.state.dbUsers
+        });
+        else {
+            const userIndex = this.state.dbUsers.findIndex(user => user.name === name);
+
+            let newUserList = this.state.dbUsers;
+
+            if(userIndex >= 0) newUserList = [this.state.dbUsers[userIndex]];
+            else alert('Usuario no Encontrado');
+
+            this.setState({
+                userList: newUserList
+            });
+        }
     }
 
     render() {
@@ -49,10 +72,10 @@ export default class App extends Component {
 
                         <div className="collapse navbar-collapse">
                             <h4 className="text-white mr-4">Registro de Usuarios</h4>
-                            <Counter users={this.state.users} />
+                            <Counter users={this.state.dbUsers} />
                         </div>
 
-                        <UserSearch />
+                        <UserSearch search={this.search} />
 
                         <LinkRepo />
                     </div>
@@ -66,7 +89,7 @@ export default class App extends Component {
                         <section className="col-md-8">
                             <h4 className="p-2 mb-2">Lista</h4>
                             <UserList
-                                users={this.state.users}
+                                users={this.state.userList}
                                 update={this.update}
                                 delete={this.delete} />
                         </section>
