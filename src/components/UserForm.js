@@ -61,7 +61,7 @@ export default class UserForm extends Component {
             <div className="card border-success">
 
                 {/* FORM */}
-                <form className="card-footer" noValidate onSubmit={this.submit}>
+                <form className="card-footer" noValidate autoComplete="off" onSubmit={this.submit}>
                     <h5 className="text-success pb-3">Registrar Usuario</h5>
 
                     {/* ERROR */}

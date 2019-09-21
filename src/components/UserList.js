@@ -22,11 +22,11 @@ export default function UserList(props) {
 
                     {/* FOOTER */}
                     <div className="card-footer">
-                        <button
+                        {/* <button
                             className="btn btn-outline-info mr-2"
                             onClick={props.update.bind(this, user.id)}>
                             <span>Editar</span>
-                        </button>
+                        </button> */}
 
                         <button
                             className="btn btn-outline-danger"
