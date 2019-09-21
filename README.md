@@ -10,19 +10,19 @@ register-react
 
 APP WEB con React y API REST con Express para el registro y almacenamiento de usuarios
 
-> [Link](https://edixonalberto.github.io/crud-react/)
+> [Link App](https://edixonalberto.github.io/register-react/)
 
 ### Tecnologías Implementadas
 
-- Libreria para el frontend `React` **16.8.2**
-    - Manejo de estados en la app usando `Redux`
-- Framework para el backend `Express`
-
+- Libreria para el frontend `React` **16.9.0**
 - Framework para la creacion de la interfaces con `Bootstrap` **4.3.1**
-+ socket_io
-+ node.js
--  Base de datos MySQL
+- Backend en `Desarrollo...`
 
-### Interfaces
+**Nota:**
 
-![image](./docs/image.png)
+Trabajando en nuevo **branch** para adaptar la interfaz a dos pantallas y manejarlas por medio de las alibrerías: `React-Router-Dom` y `Redux`
+
+
+### Interfaz
+
+![image](./docs/app.jpg)
