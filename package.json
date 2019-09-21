@@ -6,13 +6,14 @@
     "name": "Edixon Alberto",
     "email": "edixonalbertto@gmail.com"
   },
-  "homepage": "https://register-react.herokuapp.com/",
+  "homepage": "https://edixonalberto.github.io/",
   "license": "MIT",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "gh-pages -o github -d ./build"
   },
   "repository": {
     "type": "git",
