@@ -6,7 +6,7 @@
     "name": "Edixon Alberto",
     "email": "edixonalbertto@gmail.com"
   },
-  "homepage": "https://edixonalberto.github.io/",
+  "homepage": "https://edixonalberto.github.io/register-react",
   "license": "MIT",
   "scripts": {
     "start": "react-scripts start",
