@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
-import Couter from './navigation/Counter'
-import Search from './navigation/UserSearch'
+import Couter from './Counter'
+import Search from './Search'
 import User from './User';
 
 import dbUsers from '../assets/users.json'

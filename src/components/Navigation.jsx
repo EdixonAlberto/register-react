@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+import LinkRepo from './LinkRepo'
+
 export default class Navigation extends Component {
     constructor(props) {
         super(props);
@@ -42,6 +44,7 @@ export default class Navigation extends Component {
                                 <Link className="nav-link" to="/users">Lista</Link>
                             </li>
 
+                            <LinkRepo />
                         </ul>
                     </div>
                 </div>
