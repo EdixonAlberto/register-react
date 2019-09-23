@@ -1,9 +1,9 @@
-import React from 'react';
+import React from 'react'
 
-export default function UserList(props) {
-    const userCard = props.users.map(user => {
+export default (props) => {
+    return props.users.map(user => {
         return (
-            <div className="col-md-6" key={user.id}>
+            <div className="col-md-4" key={user.id}>
                 <div className="card mb-4">
 
                     {/* HEADER */}
@@ -24,14 +24,14 @@ export default function UserList(props) {
                     <div className="card-footer">
                         {/* <button
                             className="btn btn-outline-info mr-2"
-                            onClick={props.update.bind(this, user.id)}>
+                            onClick={() => props.update(user.id)}>
                             <span>Editar</span>
                         </button> */}
 
                         <button
                             className="btn btn-outline-danger"
-                            onClick={props.delete.bind(this, user.id)}>
-                            <span>Eliminar</span>
+                            onClick={() => props.destroy(user.id)}>
+                            Eliminar
                         </button>
                     </div>
 
@@ -39,10 +39,4 @@ export default function UserList(props) {
             </div>
         );
     });
-
-    return (
-        <div className="row border-dark">
-            {userCard}
-        </div>
-    );
 }
