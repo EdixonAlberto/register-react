@@ -48,12 +48,16 @@ export default class UsersList extends Component {
                     </div>
 
                     <div className="row card-body">
-                        <User
-                            users={this.state.users}
-                            update={this.update}
-                            destroy={this.destroy} />
+                        {
+                            this.state.users.map(user => (
+                                <UserCard
+                                    key={user.id}
+                                    user={user}
+                                    update={this.update}
+                                    destroy={this.destroy} />
+                            ))
+                        }
                     </div>
-
                 </div>
             </section>
         )
