@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-
-import LinkRepo from './LinkRepo'
+/* COMPONENTS */
+import LinkRepo from './LinkRepo';
 
 export default class Navigation extends Component {
     constructor(props) {
@@ -49,6 +49,6 @@ export default class Navigation extends Component {
                     </div>
                 </div>
             </nav>
-        )
+        );
     }
 }

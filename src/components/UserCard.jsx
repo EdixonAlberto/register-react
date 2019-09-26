@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 export default (props) => {
     return (
@@ -30,7 +30,7 @@ export default (props) => {
 
                     <button
                         className="btn btn-outline-danger"
-                        onClick={() => props.destroy(props.user.id)}>
+                        onClick={() => props.destroy(props.userId)}>
                         Eliminar
                     </button>
                 </div>
