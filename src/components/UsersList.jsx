@@ -1,34 +1,128 @@
 import React, { Component } from 'react'
-
+/* MODULES */
+import firebaseDb from '../modules/firebaseDb';
+/* COMPONENTS */
 import Couter from './Counter'
 import Search from './Search'
-import User from './User';
-
-import dbUsers from '../assets/users.json'
+import UserCard from './UserCard';
 
 export default class UsersList extends Component {
     constructor(props) {
-        super(props)
+        super(props);
 
         this.state = {
-            users: []
+            isMounted: true,
+            users: [],
+            loading: false,
+            nroUsers: 0
         }
     }
 
-    componentDidMount = () => {
-        const users = dbUsers;
+    componentDidMount = async () => {
+        try {
+            await this.loadUsers();
 
-        this.setState({
-            users
+            await firebaseDb.ref('users/').on('child_removed', async snap => {
+                const users = this.state.users.filter(user => user.id !== snap.key);
+
+                await setTimeout(() => {
+                    if(this.state.isMounted) {
+                        this.setState({
+                            users,
+                            loading: true,
+                            nroUsers: users.length,
+                        });
+                    }
+                }, 500);
+            });
+        } catch(error) {
+            alert('Error al obtener la lista de usuarios: ' + error);
+        }
+    }
+
+    // TODO: UPDATE
+    // update = id => {
+    //     try {
+    //     } catch(error) {
+    //         alert('Error al actualizar usuario: ' + error);
+    //     }
+    // }
+
+    loadUsers = async () => {
+        const users = [];
+        await firebaseDb.ref('users/').on('child_added', snap => {
+            users.push({
+                id: snap.key,
+                data: snap.val()
+            });
+
+            if(this.state.isMounted) {
+                this.setState({
+                    users,
+                    loading: true,
+                    nroUsers: users.length,
+                });
+            }
         });
     }
 
-    update = id => {
-        console.log(id);
+    destroy = async id => {
+        this.setState({ loading: false });
+
+        try {
+            await firebaseDb.ref('users/').child(id).remove();
+        } catch(error) {
+            alert('Error al eliminar usuario: ' + error);
+        }
     }
 
-    destroy = id => {
-        console.log(id);
+    search = async email => {
+        if(email === 'reset') await this.loadUsers();
+        else {
+            const users = this.state.users;
+            const index = users.findIndex(user => user.data.email === email);
+
+            if(index >= 0) {
+                this.setState({
+                    users: [users[index]]
+                });
+            } else alert('Usuario no Encontrado');
+        }
+    }
+
+    list = () => {
+        const users = this.state.users;
+
+        if(this.state.loading) {
+            if(users.length > 0) {
+                return users.map(user => (
+                    <UserCard
+                        key={user.id}
+                        userId={user.id}
+                        user={user.data}
+                        update={this.update}
+                        destroy={this.destroy} />
+                ));
+            } else {
+                return (
+                    <div className="col-md-12">
+                        <div className="text-center bg-danger rounded-lg p-2">
+                            <span className="text-white">
+                                No existen usuarios registrados
+                            </span>
+                        </div>
+                    </div>
+                );
+            }
+        } else {
+            return (
+                <div className="col-md-12 text-center">
+                    <div className="spinner-border text-success" role="status">
+                        <span className="sr-only">Loading...</span>
+                    </div>
+                </div>
+            );
+        }
     }
 
     render() {
@@ -37,29 +131,23 @@ export default class UsersList extends Component {
                 <div className="card border-success">
                     <h3 className="text-success text-center py-2">Lista de Usuarios</h3>
 
+                    {/* LIST TOOLS */}
                     <div className="row card-header mx-0">
                         <div className="col-md-8 mt-2">
-                            <Couter />
+                            <Couter nroUsers={this.state.nroUsers} />
                         </div>
 
                         <div className="col-md-4">
-                            <Search />
+                            <Search search={this.search} />
                         </div>
                     </div>
 
-                    <div className="row card-body">
-                        {
-                            this.state.users.map(user => (
-                                <UserCard
-                                    key={user.id}
-                                    user={user}
-                                    update={this.update}
-                                    destroy={this.destroy} />
-                            ))
-                        }
+                    {/* LIST */}
+                    <div className="row card-body mx-0">
+                        {this.list()}
                     </div>
                 </div>
             </section>
-        )
+        );
     }
 }

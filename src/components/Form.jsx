@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+/* MODULES */
+import firebaseDb from '../modules/firebaseDb';
 
 export default class Form extends Component {
     constructor(props) {
@@ -11,7 +13,13 @@ export default class Form extends Component {
     }
 
     create = () => {
-        console.log(this.state.user);
+        firebaseDb.ref('users/').push(this.state.user)
+            .then(() => {
+                // Se redirecciona a la lista de usuarios
+                window.location.href = '/users';
+            }).catch(error => {
+                alert('Error al crear usuario: ' + error);
+            });
     }
 
     resetForm = form => {
@@ -36,6 +44,7 @@ export default class Form extends Component {
     submit = e => {
         e.preventDefault();
 
+        // Se verifica que todos los campos esten llenos
         const form = e.target;
         let fieldsFull = true;
 
@@ -47,8 +56,8 @@ export default class Form extends Component {
             }
         }
 
+        // Se crea un nuevo usuario
         if(fieldsFull) {
-            // Se crea nuevo usuario
             this.create();
             this.resetForm(form);
         } else {
@@ -66,21 +75,21 @@ export default class Form extends Component {
                     <h3 className="text-success text-center py-2">Formulario</h3>
 
                     {/* FORM */}
-                    <form className="card-footer" noValidate autoComplete="off" onSubmit={this.submit}>
+                    <form className="card-footer" noValidate autoComplete="on" onSubmit={this.submit}>
                         {/* ERROR */}
                         <div
                             className="text-center bg-danger rounded-lg mb-3 p-2"
                             style={this.showError()}>
                             <span className="text-white">
                                 Los campos con (*) son requeridos.
-                        </span>
+                            </span>
                         </div>
 
                         {/* NAME AND LASTNAME */}
                         <div className="form-row mb-3">
                             <div className="col">
-                                <strong className="d-block text-dark mb-1">Nombre
-                                <span className="text-danger"> *</span>
+                                <strong className="d-block text-dark mb-1">
+                                    Nombre <span className="text-danger">*</span>
                                 </strong>
                                 <input
                                     className="form-control"
@@ -93,8 +102,8 @@ export default class Form extends Component {
                             </div>
 
                             <div className="col">
-                                <strong className="d-block text-dark mb-1">Apellido
-                                <span className="text-danger"> *</span>
+                                <strong className="d-block text-dark mb-1">
+                                    Apellido <span className="text-danger">*</span>
                                 </strong>
                                 <input
                                     className="form-control"
@@ -109,8 +118,8 @@ export default class Form extends Component {
 
                         {/* AGE */}
                         <div className="form-group">
-                            <strong className="d-block text-dark mb-1">Edad
-                            <span className="text-danger"> *</span>
+                            <strong className="d-block text-dark mb-1">
+                                Edad <span className="text-danger">*</span>
                             </strong>
                             <input
                                 className="form-control"
@@ -124,8 +133,8 @@ export default class Form extends Component {
 
                         {/* SEX */}
                         <div className="form-group">
-                            <strong className="d-block text-dark mb-1">Sexo
-                            <span className="text-danger"> *</span>
+                            <strong className="d-block text-dark mb-1">
+                                Sexo <span className="text-danger">*</span>
                             </strong>
                             <select
                                 className="custom-select"
@@ -142,8 +151,8 @@ export default class Form extends Component {
 
                         {/* EMAIL */}
                         <div className="form-group">
-                            <strong className="d-block text-dark mb-1">Correo Electrónico
-                            <span className="text-danger"> *</span>
+                            <strong className="d-block text-dark mb-1">
+                                Correo Electrónico <span className="text-danger">*</span>
                             </strong>
                             <input
                                 className="form-control"
@@ -157,8 +166,8 @@ export default class Form extends Component {
 
                         {/* PHONE */}
                         <div className="form-group">
-                            <strong className="d-block text-dark mb-1">Teléfono
-                            <span className="text-danger"> *</span>
+                            <strong className="d-block text-dark mb-1">
+                                Teléfono <span className="text-danger">*</span>
                             </strong>
                             <input
                                 className="form-control"
@@ -172,8 +181,8 @@ export default class Form extends Component {
 
                         {/* COUNTRY */}
                         <div className="form-group">
-                            <strong className="d-block text-dark mb-1">País
-                            <span className="text-danger"> *</span>
+                            <strong className="d-block text-dark mb-1">
+                                País <span className="text-danger">*</span>
                             </strong>
                             <select
                                 className="form-control"
