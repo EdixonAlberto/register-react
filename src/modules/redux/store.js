@@ -1,4 +1,5 @@
 import { createStore } from 'redux';
+import reducer from "./reducers";
 
 const initialState = {
     users: [],
@@ -7,19 +8,19 @@ const initialState = {
 
 const reducers = (state = initialState, action) => {
     switch(action.type) {
-        case 'UPDATE_NAVIGATION':
+        case reducer.UPDATE_NAVIGATION:
             return {
                 ...state,
                 path: action.path
             }
 
-        case 'SHOW_LOADING':
+        case reducer.SHOW_LOADING:
             return {
                 ...state,
                 loading: true
             }
 
-        case 'UPDATE_LIST':
+        case reducer.UPDATE_LIST:
             return {
                 ...state,
                 users: action.users,
@@ -27,7 +28,7 @@ const reducers = (state = initialState, action) => {
                 loading: false
             }
 
-        case 'SHOW_IN_LIST':
+        case reducer.SHOW_IN_LIST:
             return {
                 ...state,
                 users: action.user,
