@@ -1,23 +1,20 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from "react-router-dom";
-
-// COMPONENTS
+import { BrowserRouter as Router, Route, } from "react-router-dom";
+/* COMPONENTS */
 import Navigation from './components/Navigation';
 import Form from './components/Form';
+import ToolsLis from './components/ToolsList';
 import UsersList from './components/UsersList';
 
 export default () => (
     <Router>
-        <Route path="/" exact render={() => (
-            <div>
-                <Navigation path="/" />
-                <Form />
-            </div>
-        )} />
+        <Navigation />
+
+        <Route path="/" exact component={Form} />
 
         <Route path="/users" render={() => (
             <div>
-                <Navigation path="/users" />
+                <ToolsLis />
                 <UsersList />
             </div>
         )} />
