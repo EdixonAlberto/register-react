@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 /* MODULES */
 import store from '../modules/redux/store';
+import { updateList, showInList, showLoading } from "../modules/redux/actionCreators";
 import { getUsers } from '../modules/firebase/apiFirebase';
 /* COMPONENTS */
 import Couter from './Counter';
@@ -45,24 +46,15 @@ export default class ToolsList extends Component {
 
     /* DISPATCH-REDUX */
     updateList = users => {
-        store.dispatch({
-            type: 'UPDATE_LIST',
-            users,
-            nro: users.length
-        });
+        store.dispatch(updateList(users));
     }
 
     showInList = user => {
-        store.dispatch({
-            type: 'SHOW_IN_LIST',
-            user: [user]
-        });
+        store.dispatch(showInList(user));
     }
 
     showLoading = () => {
-        store.dispatch({
-            type: 'SHOW_LOADING'
-        });
+        store.dispatch(showLoading());
     }
 
     render() {
