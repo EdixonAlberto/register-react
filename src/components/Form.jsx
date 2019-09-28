@@ -1,24 +1,24 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 import uuid from 'uuid/v4';
 /* MODULES */
-import store from '../modules/redux/store';
 import { updateNavigation } from "../modules/redux/actionCreators";
 import { createUser } from '../modules/firebase/apiFirebase';
 
-export default class Form extends Component {
-    constructor(props) {
-        super(props);
+class Form extends Component {
+    constructor() {
+        super();
 
         this.state = {
             user: {},
             error: false,
-            register: false,
-            loading: false
+            loading: false,
+            redirect: false
         }
     }
 
-    componentDidMount = () => this.updateNavigation('/');
+    componentDidMount = () => this.props.updateNavigation('/form');
 
     create = async () => {
         const newUser = {
@@ -28,7 +28,7 @@ export default class Form extends Component {
 
         this.setState({ loading: true });
         await createUser(newUser);
-        this.setState({ register: true });
+        this.setState({ redirect: true });
     }
 
     resetForm = form => {
@@ -74,18 +74,12 @@ export default class Form extends Component {
         }
     }
 
-    showError = () => this.state.error ? {} : { display: 'none' }
-
-    /* DISPATCH-REDUX */
-    updateNavigation = path => {
-        store.dispatch(updateNavigation(path));
-    }
-
     render() {
         return (
             <section className="container px-0 py-4">
+
                 {/* REDIRECT */}
-                {this.state.register ? (<Redirect to="/users" />) : null}
+                {this.state.redirect ? (<Redirect to="/users" />) : null}
 
                 <div className="card border-success col-md-5 px-0 mx-auto">
                     <h3 className="text-success text-center py-2">Formulario</h3>
@@ -95,7 +89,7 @@ export default class Form extends Component {
                         {/* ERROR */}
                         <div
                             className="text-center bg-danger rounded-lg mb-3 p-2"
-                            style={this.showError()}>
+                            style={this.state.error ? {} : { display: 'none' }}>
                             <span className="text-white">
                                 Los campos con (*) son requeridos.
                             </span>
@@ -241,3 +235,14 @@ export default class Form extends Component {
         );
     }
 }
+
+/* DISPATCH-REDUX */
+const mapDispatchToProps = dispatch => {
+    return {
+        updateNavigation(path) {
+            dispatch(updateNavigation(path));
+        }
+    }
+}
+
+export default connect(null, mapDispatchToProps)(Form);

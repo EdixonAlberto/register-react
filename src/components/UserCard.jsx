@@ -21,13 +21,6 @@ export default (props) => {
 
                 {/* FOOTER */}
                 <div className="card-footer">
-                    {/* TODO: Implementar boton de update */}
-                    {/* <button
-                        className="btn btn-outline-info mr-2"
-                        onClick={() => props.update(props.user.id)}>
-                        Editar
-                    </button> */}
-
                     <button
                         className="btn btn-outline-danger"
                         onClick={() => props.destroy(props.userId)}>

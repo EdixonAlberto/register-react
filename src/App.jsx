@@ -10,9 +10,9 @@ export default () => (
     <Router>
         <Navigation />
 
-        <Route path="/" exact component={Form} />
+        <Route path={process.env.PUBLIC_URL + "/form"} exact component={Form} />
 
-        <Route path="/users" render={() => (
+        <Route path={process.env.PUBLIC_URL + "/users"} render={() => (
             <div>
                 <ToolsLis />
                 <UsersList />

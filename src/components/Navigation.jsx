@@ -1,62 +1,50 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-/* MODULES */
-import store from '../modules/redux/store';
+import { connect } from 'react-redux';
 /* COMPONENTS */
 import LinkRepo from './LinkRepo';
 
-export default class Navigation extends Component {
-    constructor(props) {
-        super(props);
+/* COMPONENT PRESENTATIONAL */
+const Navigation = ({ path }) => {
+    return (
+        <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+            <div className="container">
+                <span className="navbar-brand">Registro de Usuarios</span>
 
-        this.state = {
-            path: ''
-        }
-    }
+                <button
+                    className="navbar-toggler"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#navbarNav"
+                    aria-controls="navbarNav"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span className="navbar-toggler-icon"></span>
+                </button>
 
-    componentDidMount = () => {
-        store.subscribe(() => {
-            this.setState({
-                path: store.getState().path
-            });
-        });
-    }
+                <div className="collapse navbar-collapse" id="navbarNav">
+                    <ul className="navbar-nav ml-auto">
 
-    active = to => (this.state.path === to) ? "nav-bar active" : "";
+                        <li className={(window.location.pathname === '/form') ? "nav-bar active" : ""}>
+                            <Link className="nav-link" to="/form">Formulario</Link>
+                        </li>
 
-    render() {
-        return (
-            <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-                <div className="container">
-                    <span className="navbar-brand">Registro de Usuarios</span>
+                        <li className={(window.location.pathname === '/users') ? "nav-bar active" : ""}>
+                            <Link className="nav-link" to="/users">Lista</Link>
+                        </li>
 
-                    <button
-                        className="navbar-toggler"
-                        type="button"
-                        data-toggle="collapse"
-                        data-target="#navbarNav"
-                        aria-controls="navbarNav"
-                        aria-expanded="false"
-                        aria-label="Toggle navigation">
-                        <span className="navbar-toggler-icon"></span>
-                    </button>
-
-                    <div className="collapse navbar-collapse" id="navbarNav">
-                        <ul className="navbar-nav ml-auto">
-
-                            <li className={this.active('/')}>
-                                <Link className="nav-link" to="/">Formulario</Link>
-                            </li>
-
-                            <li className={this.active('/users')}>
-                                <Link className="nav-link" to="/users">Lista</Link>
-                            </li>
-
-                            <LinkRepo />
-                        </ul>
-                    </div>
+                        <LinkRepo />
+                    </ul>
                 </div>
-            </nav>
-        );
+            </div>
+        </nav>
+    );
+}
+
+const mapStateToProps = state => {
+    return {
+        path: state.path
     }
 }
+
+export default connect(mapStateToProps)(Navigation);

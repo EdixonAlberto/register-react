@@ -1,59 +1,35 @@
 import React, { Component } from 'react';
+import { connect } from "react-redux";
 /* MODULES */
-import store from '../modules/redux/store';
-<<<<<<< HEAD
-=======
-import { updateNavigation, updateList } from "../modules/redux/actionCreators";
->>>>>>> actions-reducers
+import { updateNavigation, updateList, showLoading } from "../modules/redux/actionCreators";
 import { getUsers, destroyUser } from '../modules/firebase/apiFirebase';
 /* COMPONENTS */
 import UserCard from './UserCard';
 
-export default class UsersList extends Component {
-    constructor(props) {
-        super(props);
+class UsersList extends Component {
+    componentDidMount = async () => {
+        this.props.updateNavigation('/users');
+        this.props.showloading();
 
-        this.state = {
-            users: [],
-            loading: true
+        const users = await getUsers();
+        this.props.updateList(users);
+    }
+
+    destroy = async id => {
+        this.confirm = window.confirm('Esta seguro de eliminar este usuario');
+
+        if(this.confirm) {
+            const users = this.props.users.filter(user => user.id !== id);
+
+            this.props.showloading();
+            await destroyUser(id);
+            this.props.updateList(users);
+            alert('Usuario eliminado satisfactoriamente');
         }
     }
 
-    componentDidMount = async () => {
-        this.updateNavigation('/users');
-
-        this.unsubscribe = store.subscribe(() => {
-            this.setState({
-                users: store.getState().users,
-                loading: store.getState().loading
-            });
-        });
-
-        const users = await getUsers();
-        this.updateList(users);
-    }
-
-    // Se cancela el evento subscribe de la store
-    componentWillUnmount = () => this.unsubscribe();
-
-    // TODO: UPDATE
-    // update = id => {
-    //     try {
-    //     } catch(error) {
-    //         alert('Error al actualizar usuario: ' + error);
-    //     }
-    // }
-
-    destroy = async id => {
-        const users = this.state.users.filter(user => user.id !== id);
-
-        await this.setState({ loading: true });
-        await destroyUser(id);
-        this.updateList(users);
-    }
-
     list = () => {
-        if(this.state.loading) {
+        if(this.props.loading) {
             return (
                 <div className="col-md-12 text-center">
                     <div className="spinner-border text-success" role="status">
@@ -62,7 +38,7 @@ export default class UsersList extends Component {
                 </div>
             );
         } else {
-            const users = this.state.users;
+            const users = this.props.users;
 
             if(users.length > 0) {
                 return users.map(user => (
@@ -70,7 +46,6 @@ export default class UsersList extends Component {
                         key={user.id}
                         userId={user.id}
                         user={user.data}
-                        update={this.update}
                         destroy={this.destroy} />
                 ));
             } else {
@@ -87,30 +62,6 @@ export default class UsersList extends Component {
         }
     }
 
-    /* DISPATCH-REDUX */
-    updateNavigation = path => {
-<<<<<<< HEAD
-        store.dispatch({
-            type: 'UPDATE_NAVIGATION',
-            path
-        });
-    }
-
-    updateList = users => {
-        store.dispatch({
-            type: 'UPDATE_LIST',
-            users,
-            nro: users.length
-        });
-=======
-        store.dispatch(updateNavigation(path));
-    }
-
-    updateList = users => {
-        store.dispatch(updateList(users));
->>>>>>> actions-reducers
-    }
-
     render() {
         return (
             <section className="container px-0 py-4">
@@ -125,3 +76,28 @@ export default class UsersList extends Component {
         );
     }
 }
+
+/* STATE-REDUX */
+const mapStateToProps = state => {
+    return {
+        users: state.users,
+        loading: state.loading
+    }
+}
+
+/* DISPATCH-REDUX */
+const mapDispatchToProps = dispatch => {
+    return {
+        updateNavigation(path) {
+            dispatch(updateNavigation(path));
+        },
+        updateList(users) {
+            dispatch(updateList(users));
+        },
+        showloading() {
+            dispatch(showLoading());
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(UsersList);
