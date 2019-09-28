@@ -1,18 +1,26 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-
-import LinkRepo from './LinkRepo'
+/* MODULES */
+import store from '../modules/redux/store';
+/* COMPONENTS */
+import LinkRepo from './LinkRepo';
 
 export default class Navigation extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            path: this.props.path
+            path: ''
         }
     }
 
-    visible = () => (this.state.path === '/users') ? {} : { display: 'none' };
+    componentDidMount = () => {
+        store.subscribe(() => {
+            this.setState({
+                path: store.getState().path
+            });
+        });
+    }
 
     active = to => (this.state.path === to) ? "nav-bar active" : "";
 
@@ -49,6 +57,6 @@ export default class Navigation extends Component {
                     </div>
                 </div>
             </nav>
-        )
+        );
     }
 }
