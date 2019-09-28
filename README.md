@@ -8,21 +8,28 @@ register-react
 ![Twitter](https://img.shields.io/twitter/follow/EdixonAlbertto.svg?style=social)
 ![GitHub](https://img.shields.io/github/followers/EdixonAlberto.svg?label=Follow&style=social)
 
-APP WEB con React y API REST con Express para el registro y almacenamiento de usuarios
+APP WEB con React y backend con Firebase para el registro y almacenamiento de usuarios
 
 > [Link App](https://edixonalberto.github.io/register-react/)
 
-### Tecnologías Implementadas
+### Tecnologías Utilizadas
 
-- Libreria para el frontend `React` **16.9.0**
-- Framework para la creacion de la interfaces con `Bootstrap` **4.3.1**
-- Backend en `Desarrollo...`
+**Frontend**
+- Libreria `React` **16.9.0**
+    + react-router
+    + redux
+    + react-redux
+- Bootstrap **4.3.1**
 
-**Nota:**
+**Backend**
+- Firebase/database
+    + api creada a partir de los metodos de firebase usando async/await
+- libreria dotenv
 
-Trabajando en nuevo **branch** para adaptar la interfaz a dos pantallas y manejarlas por medio de las alibrerías: `React-Router-Dom` y `Redux`
+### Pantallas
 
+(Pantalla 1)
+![image](./docs/pantalla1.png)
 
-### Interfaz
-
-![image](./docs/app.jpg)
+(Pantalla 2)
+![image](./docs/pantalla2.png)

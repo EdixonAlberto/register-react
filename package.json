@@ -1,7 +1,7 @@
 {
   "name": "register-react",
   "version": "1.0.0",
-  "description": "APP WEB con React y API REST con Express para el registro y almacenamiento de usuarios",
+  "description": "APP WEB con React y backend con Firebase para el registro y almacenamiento de usuarios",
   "author": {
     "name": "Edixon Alberto",
     "email": "edixonalbertto@gmail.com"
