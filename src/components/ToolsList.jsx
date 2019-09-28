@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 /* MODULES */
 import store from '../modules/redux/store';
+import { updateList, showInList, showLoading } from "../modules/redux/actionCreators";
 import { getUsers } from '../modules/firebase/apiFirebase';
 /* COMPONENTS */
 import Couter from './Counter';
@@ -31,38 +32,29 @@ export default class ToolsList extends Component {
         this.showLoading();
         const users = await getUsers();
 
-        if(email === 'reset') this.loadList(users);
+        if(email === 'reset') this.updateList(users);
         else {
             const index = users.findIndex(user => user.data.email === email);
 
             if(index >= 0) this.showInList(users[index]);
             else {
                 alert('Usuario no Encontrado');
-                this.loadList(users);
+                this.updateList(users);
             }
         }
     }
 
     /* DISPATCH-REDUX */
-    loadList = users => {
-        store.dispatch({
-            type: 'LOAD_LIST',
-            users,
-            nro: users.length
-        });
+    updateList = users => {
+        store.dispatch(updateList(users));
     }
 
     showInList = user => {
-        store.dispatch({
-            type: 'SHOW_IN_LIST',
-            user: [user]
-        });
+        store.dispatch(showInList(user));
     }
 
     showLoading = () => {
-        store.dispatch({
-            type: 'SHOW_LOADING'
-        });
+        store.dispatch(showLoading());
     }
 
     render() {
