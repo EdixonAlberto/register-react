@@ -1,4 +1,9 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
+import uuid from 'uuid/v4';
+/* MODULES */
+import store from '../modules/redux/store';
+import { createUser } from '../modules/firebase/apiFirebase';
 
 export default class Form extends Component {
     constructor(props) {
@@ -6,12 +11,23 @@ export default class Form extends Component {
 
         this.state = {
             user: {},
-            error: false
+            error: false,
+            register: false,
+            loading: false
         }
     }
 
-    create = () => {
-        console.log(this.state.user);
+    componentDidMount = () => this.updateNavigation('/');
+
+    create = async () => {
+        const newUser = {
+            id: uuid(),
+            data: this.state.user
+        }
+
+        this.setState({ loading: true });
+        await createUser(newUser);
+        this.setState({ register: true });
     }
 
     resetForm = form => {
@@ -47,8 +63,8 @@ export default class Form extends Component {
             }
         }
 
+        // Se crea nuevo usuario
         if(fieldsFull) {
-            // Se crea nuevo usuario
             this.create();
             this.resetForm(form);
         } else {
@@ -59,28 +75,39 @@ export default class Form extends Component {
 
     showError = () => this.state.error ? {} : { display: 'none' }
 
+    /* DISPATCH-REDUX */
+    updateNavigation = path => {
+        store.dispatch({
+            type: 'UPDATE_NAVIGATION',
+            path
+        });
+    }
+
     render() {
         return (
             <section className="container px-0 py-4">
+                {/* REDIRECT */}
+                {this.state.register ? (<Redirect to="/users" />) : null}
+
                 <div className="card border-success col-md-5 px-0 mx-auto">
                     <h3 className="text-success text-center py-2">Formulario</h3>
 
                     {/* FORM */}
-                    <form className="card-footer" noValidate autoComplete="off" onSubmit={this.submit}>
+                    <form className="card-footer" noValidate autoComplete="on" onSubmit={this.submit}>
                         {/* ERROR */}
                         <div
                             className="text-center bg-danger rounded-lg mb-3 p-2"
                             style={this.showError()}>
                             <span className="text-white">
                                 Los campos con (*) son requeridos.
-                        </span>
+                            </span>
                         </div>
 
                         {/* NAME AND LASTNAME */}
                         <div className="form-row mb-3">
                             <div className="col">
-                                <strong className="d-block text-dark mb-1">Nombre
-                                <span className="text-danger"> *</span>
+                                <strong className="d-block text-dark mb-1">
+                                    Nombre <span className="text-danger">*</span>
                                 </strong>
                                 <input
                                     className="form-control"
@@ -93,8 +120,8 @@ export default class Form extends Component {
                             </div>
 
                             <div className="col">
-                                <strong className="d-block text-dark mb-1">Apellido
-                                <span className="text-danger"> *</span>
+                                <strong className="d-block text-dark mb-1">
+                                    Apellido <span className="text-danger">*</span>
                                 </strong>
                                 <input
                                     className="form-control"
@@ -109,8 +136,8 @@ export default class Form extends Component {
 
                         {/* AGE */}
                         <div className="form-group">
-                            <strong className="d-block text-dark mb-1">Edad
-                            <span className="text-danger"> *</span>
+                            <strong className="d-block text-dark mb-1">
+                                Edad <span className="text-danger">*</span>
                             </strong>
                             <input
                                 className="form-control"
@@ -124,8 +151,8 @@ export default class Form extends Component {
 
                         {/* SEX */}
                         <div className="form-group">
-                            <strong className="d-block text-dark mb-1">Sexo
-                            <span className="text-danger"> *</span>
+                            <strong className="d-block text-dark mb-1">
+                                Sexo <span className="text-danger">*</span>
                             </strong>
                             <select
                                 className="custom-select"
@@ -142,8 +169,8 @@ export default class Form extends Component {
 
                         {/* EMAIL */}
                         <div className="form-group">
-                            <strong className="d-block text-dark mb-1">Correo Electrónico
-                            <span className="text-danger"> *</span>
+                            <strong className="d-block text-dark mb-1">
+                                Correo Electrónico <span className="text-danger">*</span>
                             </strong>
                             <input
                                 className="form-control"
@@ -157,8 +184,8 @@ export default class Form extends Component {
 
                         {/* PHONE */}
                         <div className="form-group">
-                            <strong className="d-block text-dark mb-1">Teléfono
-                            <span className="text-danger"> *</span>
+                            <strong className="d-block text-dark mb-1">
+                                Teléfono <span className="text-danger">*</span>
                             </strong>
                             <input
                                 className="form-control"
@@ -172,8 +199,8 @@ export default class Form extends Component {
 
                         {/* COUNTRY */}
                         <div className="form-group">
-                            <strong className="d-block text-dark mb-1">País
-                            <span className="text-danger"> *</span>
+                            <strong className="d-block text-dark mb-1">
+                                País <span className="text-danger">*</span>
                             </strong>
                             <select
                                 className="form-control"
@@ -191,13 +218,24 @@ export default class Form extends Component {
                         {/* REGISTER */}
                         <div className="d-flex justify-content-center pb-1">
                             <button
-                                className="btn btn-success px-5 py-2"
+                                className="btn btn-success px-4"
                                 name="button"
                                 value="empty"
                                 type="submit">
-                                <span className="font-white h5">Registrar</span>
+                                <span className="font-white h5 px-3">Registrar</span>
                             </button>
                         </div>
+
+                        {/* LOADING */}
+                        {
+                            this.state.loading ? (
+                                <div className="text-center">
+                                    <div className="spinner-border text-success" role="status">
+                                        <span className="sr-only">Loading...</span>
+                                    </div>
+                                </div>
+                            ) : null
+                        }
                     </form>
 
                 </div>

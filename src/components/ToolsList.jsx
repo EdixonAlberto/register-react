@@ -31,22 +31,22 @@ export default class ToolsList extends Component {
         this.showLoading();
         const users = await getUsers();
 
-        if(email === 'reset') this.loadList(users);
+        if(email === 'reset') this.updateList(users);
         else {
             const index = users.findIndex(user => user.data.email === email);
 
             if(index >= 0) this.showInList(users[index]);
             else {
                 alert('Usuario no Encontrado');
-                this.loadList(users);
+                this.updateList(users);
             }
         }
     }
 
     /* DISPATCH-REDUX */
-    loadList = users => {
+    updateList = users => {
         store.dispatch({
-            type: 'LOAD_LIST',
+            type: 'UPDATE_LIST',
             users,
             nro: users.length
         });
