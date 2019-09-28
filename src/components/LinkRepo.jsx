@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default () => (
-    <div className="float-right ml-4 mt-1">
+    <div className="ml-auto">
         <a
             className="text-light p-3"
             href="https://github.com/EdixonAlberto/register-react"

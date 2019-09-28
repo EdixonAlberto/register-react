@@ -9,6 +9,7 @@ const Navigation = ({ path }) => {
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
             <div className="container">
+
                 <span className="navbar-brand">Registro de Usuarios</span>
 
                 <button
@@ -24,18 +25,18 @@ const Navigation = ({ path }) => {
 
                 <div className="collapse navbar-collapse" id="navbarNav">
                     <ul className="navbar-nav ml-auto">
-
-                        <li className={(window.location.pathname === '/form') ? "nav-bar active" : ""}>
-                            <Link className="nav-link" to="/form">Formulario</Link>
+                        <li className={(path === '/') ? "nav-bar active" : ""}>
+                            <Link className="nav-link" to="/">Formulario</Link>
                         </li>
 
-                        <li className={(window.location.pathname === '/users') ? "nav-bar active" : ""}>
+                        <li className={(path === '/users') ? "nav-bar active" : ""}>
                             <Link className="nav-link" to="/users">Lista</Link>
                         </li>
 
                         <LinkRepo />
                     </ul>
                 </div>
+
             </div>
         </nav>
     );

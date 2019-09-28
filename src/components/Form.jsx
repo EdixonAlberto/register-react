@@ -18,7 +18,7 @@ class Form extends Component {
         }
     }
 
-    componentDidMount = () => this.props.updateNavigation('/form');
+    componentDidMount = () => this.props.updateNavigation('/');
 
     create = async () => {
         const newUser = {
