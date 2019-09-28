@@ -1,8 +1,9 @@
-import firebase from 'firebase';
+import firebase from 'firebase/app';
+import 'firebase/database';
 import firebaseConfig from './firebaseConfig'
 
-// Configuracion de app firebase
+// Configurar app de firebase
 const app = firebase.initializeApp(firebaseConfig);
 
-// Inicio de database firebase
+// Iniciar database de firebase
 export default app.database();
