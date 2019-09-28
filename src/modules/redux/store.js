@@ -1,6 +1,11 @@
 import { createStore } from 'redux';
 
-const reducers = (state, action) => {
+const initialState = {
+    users: [],
+    nroUsers: 0
+}
+
+const reducers = (state = initialState, action) => {
     switch(action.type) {
         case 'UPDATE_NAVIGATION':
             return {
@@ -14,16 +19,7 @@ const reducers = (state, action) => {
                 loading: true
             }
 
-        case 'LOAD_LIST':
-            const users = action.users;
-            return {
-                ...state,
-                users,
-                nroUsers: action.nro,
-                loading: false
-            }
-
-        case 'REMOVE_FROM_LIST':
+        case 'UPDATE_LIST':
             return {
                 ...state,
                 users: action.users,
