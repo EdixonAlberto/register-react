@@ -3,6 +3,7 @@ import { Redirect } from 'react-router-dom';
 import uuid from 'uuid/v4';
 /* MODULES */
 import store from '../modules/redux/store';
+import { updateNavigation } from "../modules/redux/actionCreators";
 import { createUser } from '../modules/firebase/apiFirebase';
 
 export default class Form extends Component {
@@ -77,10 +78,7 @@ export default class Form extends Component {
 
     /* DISPATCH-REDUX */
     updateNavigation = path => {
-        store.dispatch({
-            type: 'UPDATE_NAVIGATION',
-            path
-        });
+        store.dispatch(updateNavigation(path));
     }
 
     render() {

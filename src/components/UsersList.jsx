@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 /* MODULES */
 import store from '../modules/redux/store';
+<<<<<<< HEAD
+=======
+import { updateNavigation, updateList } from "../modules/redux/actionCreators";
+>>>>>>> actions-reducers
 import { getUsers, destroyUser } from '../modules/firebase/apiFirebase';
 /* COMPONENTS */
 import UserCard from './UserCard';
@@ -85,6 +89,7 @@ export default class UsersList extends Component {
 
     /* DISPATCH-REDUX */
     updateNavigation = path => {
+<<<<<<< HEAD
         store.dispatch({
             type: 'UPDATE_NAVIGATION',
             path
@@ -97,6 +102,13 @@ export default class UsersList extends Component {
             users,
             nro: users.length
         });
+=======
+        store.dispatch(updateNavigation(path));
+    }
+
+    updateList = users => {
+        store.dispatch(updateList(users));
+>>>>>>> actions-reducers
     }
 
     render() {
