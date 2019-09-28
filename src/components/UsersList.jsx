@@ -1,34 +1,102 @@
-import React, { Component } from 'react'
-
-import Couter from './Counter'
-import Search from './Search'
-import User from './User';
-
-import dbUsers from '../assets/users.json'
+import React, { Component } from 'react';
+/* MODULES */
+import store from '../modules/redux/store';
+import { getUsers, destroyUser } from '../modules/firebase/apiFirebase';
+/* COMPONENTS */
+import UserCard from './UserCard';
 
 export default class UsersList extends Component {
     constructor(props) {
-        super(props)
+        super(props);
 
         this.state = {
-            users: []
+            users: [],
+            loading: true
         }
     }
 
-    componentDidMount = () => {
-        const users = dbUsers;
+    componentDidMount = async () => {
+        this.updateNavigation('/users');
 
-        this.setState({
-            users
+        this.unsubscribe = store.subscribe(() => {
+            this.setState({
+                users: store.getState().users,
+                loading: store.getState().loading
+            });
+        });
+
+        const users = await getUsers();
+        this.updateList(users);
+    }
+
+    // Se cancela el evento subscribe de la store
+    componentWillUnmount = () => this.unsubscribe();
+
+    // TODO: UPDATE
+    // update = id => {
+    //     try {
+    //     } catch(error) {
+    //         alert('Error al actualizar usuario: ' + error);
+    //     }
+    // }
+
+    destroy = async id => {
+        const users = this.state.users.filter(user => user.id !== id);
+
+        await this.setState({ loading: true });
+        await destroyUser(id);
+        this.updateList(users);
+    }
+
+    list = () => {
+        if(this.state.loading) {
+            return (
+                <div className="col-md-12 text-center">
+                    <div className="spinner-border text-success" role="status">
+                        <span className="sr-only">Loading...</span>
+                    </div>
+                </div>
+            );
+        } else {
+            const users = this.state.users;
+
+            if(users.length > 0) {
+                return users.map(user => (
+                    <UserCard
+                        key={user.id}
+                        userId={user.id}
+                        user={user.data}
+                        update={this.update}
+                        destroy={this.destroy} />
+                ));
+            } else {
+                return (
+                    <div className="col-md-12">
+                        <div className="text-center bg-danger rounded-lg p-2">
+                            <span className="text-white">
+                                No existen usuarios registrados
+                            </span>
+                        </div>
+                    </div>
+                );
+            }
+        }
+    }
+
+    /* DISPATCH-REDUX */
+    updateNavigation = path => {
+        store.dispatch({
+            type: 'UPDATE_NAVIGATION',
+            path
         });
     }
 
-    update = id => {
-        console.log(id);
-    }
-
-    destroy = id => {
-        console.log(id);
+    updateList = users => {
+        store.dispatch({
+            type: 'UPDATE_LIST',
+            users,
+            nro: users.length
+        });
     }
 
     render() {
@@ -37,29 +105,11 @@ export default class UsersList extends Component {
                 <div className="card border-success">
                     <h3 className="text-success text-center py-2">Lista de Usuarios</h3>
 
-                    <div className="row card-header mx-0">
-                        <div className="col-md-8 mt-2">
-                            <Couter />
-                        </div>
-
-                        <div className="col-md-4">
-                            <Search />
-                        </div>
-                    </div>
-
-                    <div className="row card-body">
-                        {
-                            this.state.users.map(user => (
-                                <UserCard
-                                    key={user.id}
-                                    user={user}
-                                    update={this.update}
-                                    destroy={this.destroy} />
-                            ))
-                        }
+                    <div className="row card-body mx-0">
+                        {this.list()}
                     </div>
                 </div>
             </section>
-        )
+        );
     }
 }
