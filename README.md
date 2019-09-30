@@ -10,9 +10,11 @@ register-react
 
 APP WEB con React y backend con Firebase para el registro y almacenamiento de usuarios
 
-> [Link App](https://edixonalberto.github.io/register-react/)
+> [Link App Web](https://edixonalberto.github.io/register-react/)
 
-### Tecnologías Utilizadas
+---
+
+## Tecnologías Utilizadas
 
 **Frontend**
 - Libreria `React` **16.9.0**
@@ -22,14 +24,25 @@ APP WEB con React y backend con Firebase para el registro y almacenamiento de us
 - Bootstrap **4.3.1**
 
 **Backend**
-- Firebase/database
+- BaaS `Firebase` **7.3.2**
+    + SDK firebase/database
     + api creada a partir de los metodos de firebase usando async/await
-- libreria dotenv
+- Se usa libreria dotenv
 
-### Pantallas
 
-(Pantalla 1)
+## Instalación
+
+```bash
+npm install
+
+npm start
+```
+
+
+## Pantallas
+
+### (Pantalla 1)
 ![image](./docs/pantalla1.png)
 
-(Pantalla 2)
+### (Pantalla 2)
 ![image](./docs/pantalla2.png)
